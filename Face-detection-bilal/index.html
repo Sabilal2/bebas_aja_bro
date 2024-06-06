@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection</title>
+    <style>
+        /* Mengatur tampilan dasar untuk body */
+        body {
+            display: flex; /* Menggunakan flexbox untuk pusat konten secara horizontal dan vertikal */
+            justify-content: center; /* Pusatkan secara horizontal */
+            align-items: center; /* Pusatkan secara vertikal */
+            background-color: darkslategray; /* Warna latar belakang */
+            margin: 0; /* Menghilangkan margin default */
+            height: 100vh; /* Tinggi penuh viewport */
+            overflow: hidden; /* Menyembunyikan overflow */
+            font-family: 'Arial', sans-serif; /* Font yang digunakan */
+        }
+
+        /* Mengatur tampilan container utama */
+        #container {
+            position: relative; /* Posisi relatif untuk elemen anak absolut */
+            width: 95%; /* Lebar 95% dari viewport */
+            height: 95%; /* Tinggi 95% dari viewport */
+            border-radius: 20px; /* Sudut membulat */
+            overflow: hidden; /* Menyembunyikan overflow */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Bayangan */
+            background: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
+            display: flex; /* Menggunakan flexbox */
+            justify-content: center; /* Pusatkan secara horizontal */
+            align-items: center; /* Pusatkan secara vertikal */
+        }
+
+        /* Mengatur tampilan video */
+        video {
+            width: 100%; /* Lebar penuh container */
+            height: 100%; /* Tinggi penuh container */
+            object-fit: cover; /* Menyesuaikan video agar menutupi container */
+            border-radius: 20px; /* Sudut membulat */
+        }
+
+        /* Mengatur tampilan canvas overlay */
+        canvas {
+            position: absolute; /* Posisi absolut untuk menempatkan di atas video */
+            top: 0; /* Posisi dari atas */
+            left: 0; /* Posisi dari kiri */
+            width: 100%; /* Lebar penuh */
+            height: 100%; /* Tinggi penuh */
+        }
+
+        /* Mengatur tampilan logo */
+        .logo {
+            position: absolute; /* Posisi absolut untuk penempatan bebas */
+            width: 60px; /* Lebar logo */
+            height: auto; /* Tinggi otomatis untuk menjaga rasio */
+            top: 10px; /* Jarak dari atas */
+        }
+
+        /* Mengatur posisi logo kiri */
+        .logo.left {
+            left: 10px; /* Jarak dari kiri */
+        }
+
+        /* Mengatur posisi logo kanan */
+        .logo.right {
+            right: 10px; /* Jarak dari kanan */
+        }
+    </style>
+</head>
+<body>
+    <!-- Kontainer utama untuk video dan overlay canvas -->
+    <div id="container">
+        <!-- Logo di sebelah kiri -->
+        <img src="img/cn.png" alt="Left Logo" class="logo left">
+        <!-- Logo di sebelah kanan -->
+        <img src="img/rpl.png" alt="Right Logo" class="logo right">
+        <!-- Video stream dari kamera -->
+        <video id="video" autoplay playsinline></video>
+        <!-- Canvas overlay untuk menggambar deteksi wajah -->
+        <canvas id="overlay"></canvas>
+    </div>
+
+    <!-- Script untuk library face-api -->
+    <script defer src="face-api.min.js"></script>
+    <!-- Script kustom untuk logika aplikasi -->
+    <script defer src="script.js"></script>
+    <script>
+        // Fungsi untuk mengatur kamera
+        async function setupCamera() {
+            const video = document.getElementById('video'); // Mengambil elemen video
+            // Meminta akses ke kamera dan menampilkan stream di elemen video
+            const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+            video.srcObject = stream;
+        }
+
+        // Memanggil fungsi setupCamera saat halaman dimuat
+        setupCamera();
+    </script>
+</body>
+</html>
